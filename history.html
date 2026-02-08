@@ -5,14 +5,133 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>История создания - Хомлины</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .accessibility-panel {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 2000;
+        }
+        
+        .accessibility-btn {
+            background: white;
+            border: 2px solid #BB794C;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .accessibility-btn img {
+            width: 30px;
+            height: 30px;
+        }
+        
+        .accessibility-menu {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: white;
+            border: 2px solid #BB794C;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            min-width: 200px;
+        }
+        
+        .accessibility-menu.active {
+            display: block;
+        }
+        
+        .accessibility-option {
+            padding: 10px;
+            margin: 5px 0;
+            background: #f8f9fa;
+            border: 1px solid #BB794C;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            font-family: 'EducationalGothic', Arial, sans-serif;
+        }
+        
+        .accessibility-option:hover {
+            background: #DEB308;
+        }
+        
+        body.high-contrast {
+            background: #000 !important;
+            color: #fff !important;
+        }
+        
+        body.high-contrast .nav-btn {
+            background: #000 !important;
+            color: #fff !important;
+            border-color: #fff !important;
+        }
+        
+        body.high-contrast .nav-btn.active {
+            background: #fff !important;
+            color: #000 !important;
+        }
+        
+        body.large-text * {
+            font-size: 1.3em !important;
+        }
+        
+        body.large-text h1 {
+            font-size: 3.5rem !important;
+        }
+        
+        body.color-blind {
+            filter: grayscale(0%);
+        }
+        
+        body.color-blind .nav-btn {
+            background: #fff !important;
+            color: #000 !important;
+            border: 2px solid #000 !important;
+        }
+        
+        body.color-blind .nav-btn.active {
+            background: #000 !important;
+            color: #fff !important;
+        }
+        
+        body.color-blind .innovation-text {
+            color: #555 !important;
+        }
+        
+        body.color-blind .cta-btn {
+            background: #000 !important;
+            color: #fff !important;
+        }
+    </style>
 </head>
 <body>
+    <div class="accessibility-panel">
+        <button class="accessibility-btn" onclick="toggleAccessibilityMenu()">
+            <img src="icn/glass.png" alt="Режим для слабовидящих">
+        </button>
+        <div class="accessibility-menu" id="accessibilityMenu">
+            <div class="accessibility-option" onclick="toggleHighContrast()">Высокий контраст</div>
+            <div class="accessibility-option" onclick="toggleLargeText()">Крупный шрифт</div>
+            <div class="accessibility-option" onclick="toggleColorBlind()">Режим для дальтоников</div>
+            <div class="accessibility-option" onclick="resetAccessibility()">Сбросить</div>
+        </div>
+    </div>
+
     <nav class="top-nav">
-        <button class="nav-btn active"">История</button>
-        <button class="nav-btn" onclick="window.location.href='gallery.html'">Галерея</button>
+
+        <button class="nav-btn active">История</button>
+        <button class="nav-btn" onclick="window.location.href='gallery.html'">Введение</button>
         <button class="nav-btn" onclick="window.location.href='index.html'">Главная</button>
         <button class="nav-btn" onclick="window.location.href='fanfics.html'">Обучение</button>
-        <button class="nav-btn" onclick="window.location.href='fanfics.html'">Фан-фики</button>
+        <button class="nav-btn" onclick="window.location.href='fanfics.html'">Фанфики</button>
     </nav>
     
     <div class="container">
@@ -57,5 +176,45 @@
             </div>
         </div>
     </div>
+    
+    <script>
+        function toggleAccessibilityMenu() {
+            document.getElementById('accessibilityMenu').classList.toggle('active');
+        }
+        
+        function toggleHighContrast() {
+            document.body.classList.toggle('high-contrast');
+            localStorage.setItem('highContrast', document.body.classList.contains('high-contrast'));
+        }
+        
+        function toggleLargeText() {
+            document.body.classList.toggle('large-text');
+            localStorage.setItem('largeText', document.body.classList.contains('large-text'));
+        }
+        
+        function resetAccessibility() {
+            document.body.classList.remove('high-contrast', 'large-text', 'color-blind');
+            localStorage.removeItem('highContrast');
+            localStorage.removeItem('largeText');
+            localStorage.removeItem('colorBlind');
+        }
+        
+        function toggleColorBlind() {
+            document.body.classList.toggle('color-blind');
+            localStorage.setItem('colorBlind', document.body.classList.contains('color-blind'));
+        }
+        
+        window.onload = function() {
+            if (localStorage.getItem('highContrast') === 'true') {
+                document.body.classList.add('high-contrast');
+            }
+            if (localStorage.getItem('largeText') === 'true') {
+                document.body.classList.add('large-text');
+            }
+            if (localStorage.getItem('colorBlind') === 'true') {
+                document.body.classList.add('color-blind');
+            }
+        }
+    </script>
 </body>
 </html>
