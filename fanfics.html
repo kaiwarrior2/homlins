@@ -228,10 +228,11 @@
     </div>
 
     <nav class="top-nav">
-        <button class="nav-btn" onclick="window.location.href='index.html'">Главная</button>
         <button class="nav-btn" onclick="window.location.href='history.html'">История</button>
         <button class="nav-btn" onclick="window.location.href='gallery.html'">Галерея</button>
-        <button class="nav-btn active">Обучение</button>
+        <button class="nav-btn" onclick="window.location.href='index.html'">Главная</button>
+        <button class="nav-btn" onclick="window.location.href='fanfics.html'">Обучение</button>
+        <button class="nav-btn" onclick="window.location.href='fanfics.html'">Фанфики</button>
     </nav>
     
     <div class="container">
@@ -246,14 +247,16 @@
             </a>
 
             <a href="leo.html" class="character-card">
+
+                
+                <img src="C:\Users\makar\OneDrive\Рабочий стол\Хомлены\homlins\img\photo_20_2026-02-08_16-46-58.jpg" alt="Лео" style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px; margin-bottom: 1rem;">
                 <h2>Папа Лео</h2>
-                <span class="speech-type-badge">...</span>
                 <p>Мечтательный поэт в элегантной шляпе, который наблюдает за облаками и пишет стихи. Открой для себя тип речи описание вместе с Лео!</p>
             </a>
 
             <a href="vitya.html" class="character-card">
+                <img src="img/photo_8_2026-02-08_16-46-58.jpg" alt="Витя" style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px; margin-bottom: 1rem;">
                 <h2>Витя</h2>
-                <span class="speech-type-badge">...</span>
                 <p>Мальчуган в морской фуражке, мечтающий о первом плавании по реке Преголе. Изучи повествование через его историю!</p>
             </a>
         </div>
@@ -264,6 +267,14 @@
                 <div class="progress-fill" id="learningProgress">0%</div>
             </div>
             <p>Пройдено уроков: <span id="completedLessons">0</span> из 3</p>
+        </div>
+
+        <div class="progress-container" id="tasksSection" style="display: none; margin-top: 2rem;">
+            <h3 class="progress-title">🎉 Задания разблокированы!</h3>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem;">Поздравляем! Вы прошли все уроки. Теперь доступны творческие задания.</p>
+            <div id="tasksContainer">
+                <p style="color: #666;">Задания скоро появятся здесь...</p>
+            </div>
         </div>
     </div>
     
@@ -319,6 +330,11 @@
             document.getElementById('learningProgress').style.width = percent + '%';
             document.getElementById('learningProgress').textContent = Math.round(percent) + '%';
             document.getElementById('completedLessons').textContent = completed;
+            
+            // Показать задания, если все уроки пройдены
+            if (completed === 3) {
+                document.getElementById('tasksSection').style.display = 'block';
+            }
         }
     </script>
 </body>

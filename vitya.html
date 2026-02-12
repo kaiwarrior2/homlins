@@ -30,10 +30,11 @@
     </div>
 
     <nav class="top-nav">
-        <button class="nav-btn" onclick="window.location.href='index.html'">Главная</button>
         <button class="nav-btn" onclick="window.location.href='history.html'">История</button>
         <button class="nav-btn" onclick="window.location.href='gallery.html'">Галерея</button>
+        <button class="nav-btn" onclick="window.location.href='index.html'">Главная</button>
         <button class="nav-btn" onclick="window.location.href='fanfics.html'">Обучение</button>
+        <button class="nav-btn" onclick="window.location.href='fanfics.html'">Фанфики</button>
     </nav>
     
     <div class="container">
@@ -44,21 +45,40 @@
                 <p class="description">На набережной Петра Великого, между величественным Музеем Мирового океана и легендарным судном «Витязь», навсегда пришвартованным к берегу, стоит маленький хомлин по имени Витя. Этот мальчуган в морской фуражке, поблёскивающей на солнце, всё ещё выбирает момент, чтобы отправиться в своё первое плавание по реке Преголе.</p>
             </div>
             <div class="hero-visual">
-                <img src="img/photo_12_2026-01-29_17-57-14.jpg" alt="Витя" class="hero-image">
+                <img src="img/photo_11_2026-02-08_16-46-58.jpg" alt="Витя" class="hero-image">
             </div>
         </div>
 
         <div class="hero-section">
             <div class="hero-visual">
-                <img src="img/photo_13_2026-01-29_17-57-14.jpg" alt="Витя у моря" class="hero-image">
+                <img src="img/photo_7_2026-01-29_17-57-14.jpg" alt="Витя у моря" class="hero-image">
             </div>
             <div class="hero-content">
                 <p class="description">По характеру он — вылитый отец: такой же мечтательный и задумчивый, он подолгу присматривается к воде, будто читая в её течении свои собственные, ещё не написанные истории.</p>
+                <div style="background: white; padding: 1.5rem; border-radius: 15px; margin: 1.5rem 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                    <p style="font-size: 1.1rem; margin-bottom: 1rem;"><strong>Какой тип текста представлен выше?</strong></p>
+                    <input type="text" id="answerInput" placeholder="Введите ответ..." style="width: 100%; padding: 0.8rem; border: 2px solid #BB794C; border-radius: 10px; font-size: 1rem; margin-bottom: 1rem;">
+                    <button onclick="checkAnswer()" style="padding: 0.8rem 2rem; border: none; background: #BB794C; color: white; border-radius: 10px; cursor: pointer; font-size: 1rem;">Проверить</button>
+                    <p id="result" style="margin-top: 1rem; font-weight: bold; font-size: 1.1rem;"></p>
+                </div>
             </div>
         </div>
     </div>
     
     <script>
+        function checkAnswer() {
+            const answer = document.getElementById('answerInput').value.toLowerCase().trim();
+            const result = document.getElementById('result');
+            if (answer === 'повествование') {
+                result.textContent = '✓ Правильно! Это повествование.';
+                result.style.color = '#28a745';
+                localStorage.setItem('vityaCompleted', 'true');
+            } else {
+                result.textContent = '✗ Неправильно. Попробуйте ещё раз!';
+                result.style.color = '#dc3545';
+            }
+        }
+        
         window.addEventListener('scroll', function() {
             const windowHeight = window.innerHeight;
             const documentHeight = document.documentElement.scrollHeight;
