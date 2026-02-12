@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Обучение - Типы речи</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .accessibility-panel {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 2000;
+        }
+        
+        .accessibility-btn {
+            background: white;
+            border: 2px solid #BB794C;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            animation: pulse 3s ease-in-out infinite;
+        }
+        
+        .accessibility-btn:hover {
+            animation: none;
+            transform: scale(1.1);
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+            50% {
+                transform: scale(1.05);
+                box-shadow: 0 4px 15px rgba(187, 121, 76, 0.2);
+            }
+        }
+        
+        .accessibility-btn img {
+            width: 30px;
+            height: 30px;
+        }
+        
+        .accessibility-menu {
+            display: none;
+            position: absolute;
+            top: 60px;
+            right: 0;
+            background: white;
+            border: 2px solid #BB794C;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            min-width: 200px;
+        }
+        
+        .accessibility-menu.active {
+            display: block;
+        }
+        
+        .accessibility-option {
+            padding: 10px;
+            margin: 5px 0;
+            background: #f8f9fa;
+            border: 1px solid #BB794C;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+            font-family: 'EducationalGothic', Arial, sans-serif;
+        }
+        
+        .accessibility-option:hover {
+            background: #DEB308;
+        }
+        
+        body.high-contrast {
+            background: #000 !important;
+            color: #fff !important;
+        }
+        
+        body.high-contrast .nav-btn {
+            background: #000 !important;
+            color: #fff !important;
+            border-color: #fff !important;
+        }
+        
+        body.high-contrast .nav-btn.active {
+            background: #fff !important;
+            color: #000 !important;
+        }
+        
+        body.large-text * {
+            font-size: 1.3em !important;
+        }
+        
+        body.large-text h1 {
+            font-size: 3.5rem !important;
+        }
+        
+        body.color-blind {
+            filter: grayscale(0%);
+        }
+        
+        body.color-blind .nav-btn {
+            background: #fff !important;
+            color: #000 !important;
+            border: 2px solid #000 !important;
+        }
+        
+        body.color-blind .nav-btn.active {
+            background: #000 !important;
+            color: #fff !important;
+        }
+        
+        .learning-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-family: 'MontserratAlternates', Arial, sans-serif;
+            color: #242423;
+            margin-bottom: 3rem;
+        }
+        
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .character-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(36, 36, 35, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .character-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(36, 36, 35, 0.2);
+        }
+        
+        .character-card h2 {
+            font-size: 2rem;
+            font-family: 'MontserratAlternates', Arial, sans-serif;
+            color: #BB794C;
+            margin-bottom: 1rem;
+        }
+        
+        .speech-type-badge {
+            display: inline-block;
+            background: #DEB308;
+            color: #242423;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+        
+        .character-card p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #242423;
+        }
+        
+        .progress-container {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(36, 36, 35, 0.1);
+        }
+        
+        .progress-title {
+            font-size: 1.5rem;
+            font-family: 'MontserratAlternates', Arial, sans-serif;
+            color: #242423;
+            margin-bottom: 1rem;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #BB794C, #DEB308);
+            width: 0%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="accessibility-panel">
+        <button class="accessibility-btn" onclick="toggleAccessibilityMenu()">
+            <img src="icn/glass.png" alt="Режим для слабовидящих">
+        </button>
+        <div class="accessibility-menu" id="accessibilityMenu">
+            <div class="accessibility-option" onclick="toggleHighContrast()">Высокий контраст</div>
+            <div class="accessibility-option" onclick="toggleLargeText()">Крупный шрифт</div>
+            <div class="accessibility-option" onclick="toggleColorBlind()">Режим для дальтоников</div>
+            <div class="accessibility-option" onclick="resetAccessibility()">Сбросить</div>
+        </div>
+    </div>
+
+    <nav class="top-nav">
+        <button class="nav-btn" onclick="window.location.href='index.html'">Главная</button>
+        <button class="nav-btn" onclick="window.location.href='history.html'">История</button>
+        <button class="nav-btn" onclick="window.location.href='gallery.html'">Галерея</button>
+        <button class="nav-btn active">Обучение</button>
+    </nav>
+    
+    <div class="container">
+        <h1 class="learning-title">Изучай типы речи с хомлинами</h1>
+        
+        <div class="characters-grid">
+            <a href="karl.html" class="character-card">
+                <img src="img/photo_14_2026-02-08_16-46-58.jpg" alt="Дедушка Карл" style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px; margin-bottom: 1rem;">
+                <h2>Дедушка Карл</h2>
+                
+                <p>Мудрый старший хомлин, который любит чай из местных трав и мастерски обрабатывает дерево. Познакомься с ним и узнай, что такое рассуждение!</p>
+            </a>
+
+            <a href="leo.html" class="character-card">
+                <h2>Папа Лео</h2>
+                <span class="speech-type-badge">...</span>
+                <p>Мечтательный поэт в элегантной шляпе, который наблюдает за облаками и пишет стихи. Открой для себя тип речи описание вместе с Лео!</p>
+            </a>
+
+            <a href="vitya.html" class="character-card">
+                <h2>Витя</h2>
+                <span class="speech-type-badge">...</span>
+                <p>Мальчуган в морской фуражке, мечтающий о первом плавании по реке Преголе. Изучи повествование через его историю!</p>
+            </a>
+        </div>
+        
+        <div class="progress-container">
+            <h3 class="progress-title">Ваш прогресс обучения</h3>
+            <div class="progress-bar">
+                <div class="progress-fill" id="learningProgress">0%</div>
+            </div>
+            <p>Пройдено уроков: <span id="completedLessons">0</span> из 3</p>
+        </div>
+    </div>
+    
+    <script>
+        function toggleAccessibilityMenu() {
+            document.getElementById('accessibilityMenu').classList.toggle('active');
+        }
+        
+        function toggleHighContrast() {
+            document.body.classList.toggle('high-contrast');
+            localStorage.setItem('highContrast', document.body.classList.contains('high-contrast'));
+        }
+        
+        function toggleLargeText() {
+            document.body.classList.toggle('large-text');
+            localStorage.setItem('largeText', document.body.classList.contains('large-text'));
+        }
+        
+        function resetAccessibility() {
+            document.body.classList.remove('high-contrast', 'large-text', 'color-blind');
+            localStorage.removeItem('highContrast');
+            localStorage.removeItem('largeText');
+            localStorage.removeItem('colorBlind');
+        }
+        
+        function toggleColorBlind() {
+            document.body.classList.toggle('color-blind');
+            localStorage.setItem('colorBlind', document.body.classList.contains('color-blind'));
+        }
+        
+        window.onload = function() {
+            if (localStorage.getItem('highContrast') === 'true') {
+                document.body.classList.add('high-contrast');
+            }
+            if (localStorage.getItem('largeText') === 'true') {
+                document.body.classList.add('large-text');
+            }
+            if (localStorage.getItem('colorBlind') === 'true') {
+                document.body.classList.add('color-blind');
+            }
+            
+            // Обновление прогресса
+            updateProgress();
+        }
+        
+        function updateProgress() {
+            let completed = 0;
+            if (localStorage.getItem('karlCompleted') === 'true') completed++;
+            if (localStorage.getItem('leoCompleted') === 'true') completed++;
+            if (localStorage.getItem('vityaCompleted') === 'true') completed++;
+            
+            const percent = (completed / 3) * 100;
+            document.getElementById('learningProgress').style.width = percent + '%';
+            document.getElementById('learningProgress').textContent = Math.round(percent) + '%';
+            document.getElementById('completedLessons').textContent = completed;
+        }
+    </script>
+</body>
+</html>
