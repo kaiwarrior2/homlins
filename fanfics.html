@@ -130,9 +130,28 @@
         
         .characters-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
             margin-top: 2rem;
+        }
+        
+        .character-card img {
+            width: 100%;
+            height: auto;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .characters-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .character-card img {
+                max-height: 250px;
+            }
         }
         
         .character-card {
@@ -240,22 +259,19 @@
         
         <div class="characters-grid">
             <a href="karl.html" class="character-card">
-                <img src="img/photo_14_2026-02-08_16-46-58.jpg" alt="Дедушка Карл" style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px; margin-bottom: 1rem;">
+                <img src="img/photo_14_2026-02-08_16-46-58.jpg" alt="Дедушка Карл">
                 <h2>Дедушка Карл</h2>
-                
                 <p>Мудрый старший хомлин, который любит чай из местных трав и мастерски обрабатывает дерево. Познакомься с ним и узнай, что такое рассуждение!</p>
             </a>
 
             <a href="leo.html" class="character-card">
-
-                
-                <img src="C:\Users\makar\OneDrive\Рабочий стол\Хомлены\homlins\img\photo_20_2026-02-08_16-46-58.jpg" alt="Лео" style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px; margin-bottom: 1rem;">
+                <img src="img/photo_20_2026-02-08_16-46-58.jpg" alt="Лео">
                 <h2>Папа Лео</h2>
                 <p>Мечтательный поэт в элегантной шляпе, который наблюдает за облаками и пишет стихи. Открой для себя тип речи описание вместе с Лео!</p>
             </a>
 
             <a href="vitya.html" class="character-card">
-                <img src="img/photo_8_2026-02-08_16-46-58.jpg" alt="Витя" style="width: 100%; height: 300px; object-fit: cover; border-radius: 10px; margin-bottom: 1rem;">
+                <img src="img/photo_8_2026-02-08_16-46-58.jpg" alt="Витя">
                 <h2>Витя</h2>
                 <p>Мальчуган в морской фуражке, мечтающий о первом плавании по реке Преголе. Изучи повествование через его историю!</p>
             </a>

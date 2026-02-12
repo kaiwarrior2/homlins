@@ -112,7 +112,19 @@
         }
         
         .hero-image {
-            max-width: 500px !important;
+            width: 100%;
+            height: auto;
+            max-width: 500px;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-section {
+                flex-direction: column;
+            }
+            
+            .hero-image {
+                max-width: 100%;
+            }
         }
     </style>
 </head>
