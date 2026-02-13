@@ -41,6 +41,12 @@
     </style>
 </head>
 <body>
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    
     <div class="progress-bar">
         <div class="progress-fill" id="progressFill"></div>
     </div>
@@ -109,6 +115,11 @@
             const scrollPercent = (scrollTop / (documentHeight - windowHeight)) * 100;
             document.getElementById('progressFill').style.width = scrollPercent + '%';
         });
+        
+        function toggleMobileMenu() {
+            document.querySelector('.mobile-menu-btn').classList.toggle('active');
+            document.querySelector('.top-nav').classList.toggle('active');
+        }
     </script>
 </body>
 </html>

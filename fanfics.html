@@ -234,6 +234,12 @@
     </style>
 </head>
 <body>
+    <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    
     <div class="accessibility-panel">
         <button class="accessibility-btn" onclick="toggleAccessibilityMenu()">
             <img src="icn/glass.png" alt="Режим для слабовидящих">
@@ -250,7 +256,7 @@
         <button class="nav-btn" onclick="window.location.href='history.html'">История</button>
         <button class="nav-btn" onclick="window.location.href='gallery.html'">Галерея</button>
         <button class="nav-btn" onclick="window.location.href='index.html'">Главная</button>
-        <button class="nav-btn" onclick="window.location.href='fanfics.html'">Обучение</button>
+        <button class="nav-btn" onclick="window.location.href='learning.html'">Обучение</button>
         <button class="nav-btn" onclick="window.location.href='fanfics.html'">Фанфики</button>
     </nav>
     
@@ -351,6 +357,11 @@
             if (completed === 3) {
                 document.getElementById('tasksSection').style.display = 'block';
             }
+        }
+        
+        function toggleMobileMenu() {
+            document.querySelector('.mobile-menu-btn').classList.toggle('active');
+            document.querySelector('.top-nav').classList.toggle('active');
         }
     </script>
 
