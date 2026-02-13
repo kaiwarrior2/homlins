@@ -157,12 +157,53 @@
         }
         
         @media (max-width: 768px) {
+            body {
+                padding-top: 20px;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
             .hero-section {
                 flex-direction: column;
+                gap: 2rem;
+                text-align: center;
+                min-height: auto;
+            }
+            
+            .hero-content {
+                max-width: 100%;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+                line-height: 1.3;
+            }
+            
+            .innovation-text {
+                font-size: 0.8rem;
+            }
+            
+            .description {
+                font-size: 1rem;
+                max-width: 100%;
+            }
+            
+            .cta-btn {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+                width: 100%;
+                max-width: 300px;
             }
             
             .hero-image {
                 max-width: 100%;
+                width: 100%;
+            }
+            
+            .accessibility-panel {
+                top: 70px;
             }
             
             .mobile-menu-btn {
@@ -181,6 +222,7 @@
                 box-shadow: 2px 0 10px rgba(0,0,0,0.1);
                 transition: left 0.3s ease;
                 z-index: 2500;
+                transform: none;
             }
             
             .top-nav.active {
@@ -190,6 +232,8 @@
             .nav-btn {
                 width: 100%;
                 margin: 10px 0;
+                height: 45px;
+                font-size: 0.9rem;
             }
         }
     </style>
