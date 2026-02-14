@@ -303,19 +303,19 @@
                     <select id="characterSelect" style="width: 100%; padding: 0.8rem; border: 2px solid #BB794C; border-radius: 10px; margin-bottom: 1rem; font-size: 1rem;">
                         <option value="">-- Выбери персонажа --</option>
                         <option value="Карл">Дедушка Карл</option>
+                        <option value="Марта">Бабушка Марта</option>
                         <option value="Лео">Папа Лео</option>
+                        <option value="Варвара">Мама Варвара</option>
                         <option value="Витя">Витя</option>
-                        <option value="Мама">Мама</option>
-                        <option value="Дочка">Дочка</option>
-                        <option value="Бабушка">Бабушка</option>
-                        <option value="Сын">Сын</option>
+                        <option value="Уля">Уля</option>
+                        <option value="Антошка">Антошка</option>
                     </select>
                     
                     <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Твой текст-описание:</label>
                     <textarea id="descriptionText" placeholder="Напиши описание выбранного хомлина..." style="width: 100%; min-height: 200px; padding: 1rem; border: 2px solid #BB794C; border-radius: 10px; font-size: 1rem; font-family: Arial, sans-serif; resize: vertical; margin-bottom: 1rem;"></textarea>
                     
                     <div style="margin-bottom: 1rem;">
-                        <span style="color: #666;">Слов: <span id="wordCount">0</span> / 100</span>
+                        <span style="color: #666;">Предложений: <span id="sentenceCount">0</span> / 8</span>
                     </div>
                     
                     <button onclick="checkDescription()" style="padding: 1rem 2rem; border: none; background: #BB794C; color: white; border-radius: 10px; cursor: pointer; font-size: 1rem; margin-right: 1rem;">Проверить с помощью ИИ</button>
@@ -394,14 +394,14 @@
             document.querySelector('.top-nav').classList.toggle('active');
         }
         
-        // Подсчет слов
+        // Подсчет предложений
         document.addEventListener('DOMContentLoaded', function() {
             const textarea = document.getElementById('descriptionText');
             if (textarea) {
                 textarea.addEventListener('input', function() {
                     const text = this.value.trim();
-                    const words = text ? text.split(/\s+/).length : 0;
-                    document.getElementById('wordCount').textContent = words;
+                    const sentences = text ? text.split(/[.!?]+/).filter(s => s.trim().length > 0).length : 0;
+                    document.getElementById('sentenceCount').textContent = sentences;
                 });
             }
         });
@@ -410,15 +410,15 @@
         async function checkDescription() {
             const character = document.getElementById('characterSelect').value;
             const text = document.getElementById('descriptionText').value.trim();
-            const wordCount = text ? text.split(/\s+/).length : 0;
+            const sentences = text ? text.split(/[.!?]+/).filter(s => s.trim().length > 0) : [];
             
             if (!character) {
                 alert('Выберите персонажа!');
                 return;
             }
             
-            if (wordCount < 100) {
-                alert('Текст должен содержать минимум 100 слов. Сейчас: ' + wordCount);
+            if (sentences.length < 8) {
+                alert('Текст должен содержать минимум 8 предложений. Сейчас: ' + sentences.length);
                 return;
             }
             
@@ -435,37 +435,36 @@
         }
         
         function analyzeText(text) {
-            const words = text.split(/\s+/);
             const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0);
             
             // Проверка на описательные слова
-            const descriptiveWords = ['красивый', 'маленький', 'большой', 'добрый', 'мудрый', 'веселый', 'грустный', 'яркий', 'тихий', 'громкий', 'старый', 'молодой', 'высокий', 'низкий'];
+            const descriptiveWords = ['красивый', 'маленький', 'большой', 'добрый', 'мудрый', 'веселый', 'грустный', 'яркий', 'тихий', 'громкий', 'старый', 'молодой', 'высокий', 'низкий', 'милый', 'забавный', 'умный', 'смелый', 'добрая', 'мудрая', 'веселая'];
             const hasDescriptive = descriptiveWords.some(word => text.toLowerCase().includes(word));
             
             // Проверка структуры
-            const hasGoodStructure = sentences.length >= 5;
+            const hasGoodStructure = sentences.length >= 8;
             
             // Оценка
             let score = 0;
             let feedback = [];
             
-            if (words.length >= 100) {
-                score += 30;
-                feedback.push('✓ Объем текста достаточный (' + words.length + ' слов)');
+            if (sentences.length >= 8) {
+                score += 40;
+                feedback.push('✓ Достаточное количество предложений (' + sentences.length + ')');
+            } else {
+                feedback.push('⚠ Добавьте еще ' + (8 - sentences.length) + ' предложений');
             }
             
             if (hasDescriptive) {
-                score += 35;
+                score += 40;
                 feedback.push('✓ Использованы описательные прилагательные');
             } else {
                 feedback.push('⚠ Добавьте больше описательных прилагательных');
             }
             
-            if (hasGoodStructure) {
-                score += 35;
-                feedback.push('✓ Хорошая структура текста (' + sentences.length + ' предложений)');
-            } else {
-                feedback.push('⚠ Разбейте текст на больше предложений');
+            if (sentences.length >= 9) {
+                score += 20;
+                feedback.push('✓ Отличная детализация!');
             }
             
             return { score, feedback };
