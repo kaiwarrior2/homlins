@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Обучение - Типы речи</title>
     <link rel="stylesheet" href="style.css">
-    <script src="config.js"></script>
-    <script src="ai-checker.js"></script>
+    <script src="ai-checker-backend.js"></script>
     <style>
         .accessibility-panel {
             position: fixed;
@@ -292,44 +291,6 @@
             </div>
             <p>Пройдено уроков: <span id="completedLessons">0</span> из 3</p>
         </div>
-
-        <div class="progress-container" id="tasksSection" style="display: none; margin-top: 2rem;">
-            <h3 class="progress-title">🎉 Задания разблокированы!</h3>
-            <p style="font-size: 1.2rem; margin-bottom: 2rem;">Поздравляем! Вы прошли все уроки. Теперь доступны творческие задания.</p>
-            <div id="tasksContainer">
-                <div style="background: white; padding: 2rem; border-radius: 15px; margin: 1.5rem 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
-                    <h3 style="color: #BB794C; margin-bottom: 1rem;">Задание 1: Напиши описание хомлина</h3>
-                    <p style="margin-bottom: 1rem;">Выбери одного из семи хомлинов и напиши текст-описание (минимум 100 слов). Опиши его внешность, характер, привычки.</p>
-                    
-                    <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Выбери хомлина:</label>
-                    <select id="characterSelect" style="width: 100%; padding: 0.8rem; border: 2px solid #BB794C; border-radius: 10px; margin-bottom: 1rem; font-size: 1rem;">
-                        <option value="">-- Выбери персонажа --</option>
-                        <option value="Карл">Дедушка Карл</option>
-                        <option value="Марта">Бабушка Марта</option>
-                        <option value="Лео">Папа Лео</option>
-                        <option value="Варвара">Мама Варвара</option>
-                        <option value="Витя">Витя</option>
-                        <option value="Уля">Уля</option>
-                        <option value="Антошка">Антошка</option>
-                    </select>
-                    
-                    <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Твой текст-описание:</label>
-                    <textarea id="descriptionText" placeholder="Напиши описание выбранного хомлина..." style="width: 100%; min-height: 200px; padding: 1rem; border: 2px solid #BB794C; border-radius: 10px; font-size: 1rem; font-family: Arial, sans-serif; resize: vertical; margin-bottom: 1rem;"></textarea>
-                    
-                    <div style="margin-bottom: 1rem;">
-                        <span style="color: #666;">Предложений: <span id="sentenceCount">0</span> / 8</span>
-                    </div>
-                    
-                    <button onclick="checkDescription()" style="padding: 1rem 2rem; border: none; background: #BB794C; color: white; border-radius: 10px; cursor: pointer; font-size: 1rem; margin-right: 1rem;">Проверить с помощью ИИ</button>
-                    <button onclick="saveDescription()" style="padding: 1rem 2rem; border: none; background: #DEB308; color: #242423; border-radius: 10px; cursor: pointer; font-size: 1rem;">Сохранить</button>
-                    
-                    <div id="aiResult" style="margin-top: 1.5rem; padding: 1rem; border-radius: 10px; display: none;"></div>
-                    <div id="loadingAI" style="margin-top: 1rem; display: none; text-align: center;">
-                        <p style="color: #BB794C;">⏳ ИИ анализирует ваш текст...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
     
     <script>
@@ -384,47 +345,11 @@
             document.getElementById('learningProgress').style.width = percent + '%';
             document.getElementById('learningProgress').textContent = Math.round(percent) + '%';
             document.getElementById('completedLessons').textContent = completed;
-            
-            // Показать задания, если все уроки пройдены
-            if (completed === 3) {
-                document.getElementById('tasksSection').style.display = 'block';
-            }
         }
         
         function toggleMobileMenu() {
             document.querySelector('.mobile-menu-btn').classList.toggle('active');
             document.querySelector('.top-nav').classList.toggle('active');
-        }
-        
-        document.addEventListener('DOMContentLoaded', function() {
-            const textarea = document.getElementById('descriptionText');
-            if (textarea) {
-                textarea.addEventListener('input', function() {
-                    const text = this.value.trim();
-                    const sentences = text ? text.split(/[.!?]+/).filter(s => s.trim().length > 0).length : 0;
-                    document.getElementById('sentenceCount').textContent = sentences;
-                });
-            }
-        });
-        
-        function checkDescription() {
-            checkDescriptionWithAI();
-        }
-        
-        function saveDescription() {
-            const character = document.getElementById('characterSelect').value;
-            const text = document.getElementById('descriptionText').value.trim();
-            
-            if (!character || !text) {
-                alert('Заполните все поля!');
-                return;
-            }
-            
-            localStorage.setItem('task1_character', character);
-            localStorage.setItem('task1_text', text);
-            localStorage.setItem('task1_completed', 'true');
-            
-            alert('✅ Работа сохранена!');
         }
     </script>
 
