@@ -2,6 +2,7 @@ import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
+PROJECT_ROOT = Path(r'C:\Users\makar\OneDrive\Рабочий стол\Хомлены\homlins')
 
 SECRET_KEY = 'django-insecure-key-change-in-production'
 
@@ -37,7 +38,7 @@ ROOT_URLCONF = 'homlins_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR.parent],
+        'DIRS': [PROJECT_ROOT],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -72,7 +73,7 @@ USE_I18N = True
 USE_TZ = True
 
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [BASE_DIR.parent]
+STATICFILES_DIRS = [PROJECT_ROOT]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOW_ALL_ORIGINS = True
