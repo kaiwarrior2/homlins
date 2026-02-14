@@ -1,11 +1,12 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Обучение - Типы речи</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="ai-checker-backend.js"></script>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <script src="{% static 'ai-checker-backend.js' %}"></script>
     <style>
         .accessibility-panel {
             position: fixed;
@@ -243,7 +244,7 @@
     
     <div class="accessibility-panel">
         <button class="accessibility-btn" onclick="toggleAccessibilityMenu()">
-            <img src="icn/glass.png" alt="Режим для слабовидящих">
+            <img src="{% static 'icn/glass.png' %}" alt="Режим для слабовидящих">
         </button>
         <div class="accessibility-menu" id="accessibilityMenu">
             <div class="accessibility-option" onclick="toggleHighContrast()">Высокий контраст</div>
@@ -266,19 +267,19 @@
         
         <div class="characters-grid">
             <a href="karl.html" class="character-card">
-                <img src="img/photo_14_2026-02-08_16-46-58.jpg" alt="Дедушка Карл">
+                <img src="{% static 'img/photo_14_2026-02-08_16-46-58.jpg' %}" alt="Дедушка Карл">
                 <h2>Дедушка Карл</h2>
                 <p>Мудрый старший хомлин, который любит чай из местных трав и мастерски обрабатывает дерево. Познакомься с ним и узнай, что такое рассуждение!</p>
             </a>
 
             <a href="leo.html" class="character-card">
-                <img src="img/photo_20_2026-02-08_16-46-58.jpg" alt="Лео">
+                <img src="{% static 'img/photo_20_2026-02-08_16-46-58.jpg' %}" alt="Лео">
                 <h2>Папа Лео</h2>
                 <p>Мечтательный поэт в элегантной шляпе, который наблюдает за облаками и пишет стихи. Открой для себя тип речи описание вместе с Лео!</p>
             </a>
 
             <a href="vitya.html" class="character-card">
-                <img src="img/photo_8_2026-02-08_16-46-58.jpg" alt="Витя">
+                <img src="{% static 'img/photo_8_2026-02-08_16-46-58.jpg' %}" alt="Витя">
                 <h2>Витя</h2>
                 <p>Мальчуган в морской фуражке, мечтающий о первом плавании по реке Преголе. Изучи повествование через его историю!</p>
             </a>
