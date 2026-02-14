@@ -1,10 +1,11 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Цифровой путеводитель по типам речи</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
     <style>
         .accessibility-panel {
             position: fixed;
@@ -247,7 +248,7 @@
     
     <div class="accessibility-panel">
         <button class="accessibility-btn" onclick="toggleAccessibilityMenu()">
-            <img src="icn/glass.png" alt="Режим для слабовидящих">
+            <img src="{% static 'icn/glass.png' %}" alt="Режим для слабовидящих">
         </button>
         <div class="accessibility-menu" id="accessibilityMenu">
             <div class="accessibility-option" onclick="toggleHighContrast()">Высокий контраст</div>
@@ -275,7 +276,7 @@
                 <button class="cta-btn" onclick="window.location.href='fanfics.html'">Начать изучение →</button>
             </div>
             <div class="hero-visual">
-                <img src="img/HOMLINS.jpg" alt="Калининградские хомлины" class="hero-image">
+                <img src="{% static 'img/HOMLINS.jpg' %}" alt="Калининградские хомлины" class="hero-image">
             </div>
         </div>
     </div>
