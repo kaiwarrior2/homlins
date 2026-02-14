@@ -37,7 +37,7 @@ ROOT_URLCONF = 'homlins_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR.parent],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
