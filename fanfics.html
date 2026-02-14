@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Обучение - Типы речи</title>
     <link rel="stylesheet" href="style.css">
+    <script src="config.js"></script>
+    <script src="ai-checker.js"></script>
     <style>
         .accessibility-panel {
             position: fixed;
@@ -394,7 +396,6 @@
             document.querySelector('.top-nav').classList.toggle('active');
         }
         
-        // Подсчет предложений
         document.addEventListener('DOMContentLoaded', function() {
             const textarea = document.getElementById('descriptionText');
             if (textarea) {
@@ -406,92 +407,8 @@
             }
         });
         
-        // Проверка текста с помощью ИИ (симуляция)
-        async function checkDescription() {
-            const character = document.getElementById('characterSelect').value;
-            const text = document.getElementById('descriptionText').value.trim();
-            const sentences = text ? text.split(/[.!?]+/).filter(s => s.trim().length > 0) : [];
-            
-            if (!character) {
-                alert('Выберите персонажа!');
-                return;
-            }
-            
-            if (sentences.length < 8) {
-                alert('Текст должен содержать минимум 8 предложений. Сейчас: ' + sentences.length);
-                return;
-            }
-            
-            // Показываем загрузку
-            document.getElementById('loadingAI').style.display = 'block';
-            document.getElementById('aiResult').style.display = 'none';
-            
-            // Симуляция проверки ИИ
-            setTimeout(() => {
-                const analysis = analyzeText(text);
-                displayAIResult(analysis);
-                document.getElementById('loadingAI').style.display = 'none';
-            }, 2000);
-        }
-        
-        function analyzeText(text) {
-            const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0);
-            
-            // Проверка на описательные слова
-            const descriptiveWords = ['красивый', 'маленький', 'большой', 'добрый', 'мудрый', 'веселый', 'грустный', 'яркий', 'тихий', 'громкий', 'старый', 'молодой', 'высокий', 'низкий', 'милый', 'забавный', 'умный', 'смелый', 'добрая', 'мудрая', 'веселая'];
-            const hasDescriptive = descriptiveWords.some(word => text.toLowerCase().includes(word));
-            
-            // Проверка структуры
-            const hasGoodStructure = sentences.length >= 8;
-            
-            // Оценка
-            let score = 0;
-            let feedback = [];
-            
-            if (sentences.length >= 8) {
-                score += 40;
-                feedback.push('✓ Достаточное количество предложений (' + sentences.length + ')');
-            } else {
-                feedback.push('⚠ Добавьте еще ' + (8 - sentences.length) + ' предложений');
-            }
-            
-            if (hasDescriptive) {
-                score += 40;
-                feedback.push('✓ Использованы описательные прилагательные');
-            } else {
-                feedback.push('⚠ Добавьте больше описательных прилагательных');
-            }
-            
-            if (sentences.length >= 9) {
-                score += 20;
-                feedback.push('✓ Отличная детализация!');
-            }
-            
-            return { score, feedback };
-        }
-        
-        function displayAIResult(analysis) {
-            const resultDiv = document.getElementById('aiResult');
-            let color = '#dc3545';
-            let emoji = '❌';
-            
-            if (analysis.score >= 80) {
-                color = '#28a745';
-                emoji = '✅';
-            } else if (analysis.score >= 60) {
-                color = '#ffc107';
-                emoji = '⚠️';
-            }
-            
-            resultDiv.innerHTML = `
-                <h4 style="color: ${color}; margin-bottom: 1rem;">${emoji} Оценка ИИ: ${analysis.score}/100</h4>
-                <ul style="text-align: left; line-height: 2;">
-                    ${analysis.feedback.map(f => '<li>' + f + '</li>').join('')}
-                </ul>
-            `;
-            resultDiv.style.display = 'block';
-            resultDiv.style.background = color === '#28a745' ? '#d4edda' : (color === '#ffc107' ? '#fff3cd' : '#f8d7da');
-            resultDiv.style.border = '2px solid ' + color;
+        function checkDescription() {
+            checkDescriptionWithAI();
         }
         
         function saveDescription() {
