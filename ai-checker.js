@@ -63,11 +63,11 @@ function analyzeTextLocally(text) {
     if (sentences.length >= 8) {
         score += 40;
         feedback.push('✓ Достаточное количество предложений (' + sentences.length + ')');
-    } else if (sentences.length >= 5) {
+    } else if (sentences.length >= 1) {
         score += 20;
-        feedback.push('⚠ Мало предложений (' + sentences.length + '). Минимум: 8');
+        feedback.push('⚠ Мало предложений (' + sentences.length + '). Рекомендуется: 8+');
     } else {
-        feedback.push('❌ Слишком мало предложений (' + sentences.length + '). Минимум: 8');
+        feedback.push('❌ Нет предложений');
     }
     
     if (hasDescriptive) {
@@ -77,17 +77,14 @@ function analyzeTextLocally(text) {
         feedback.push('⚠ Добавьте больше описательных прилагательных');
     }
     
-    if (words.length >= 100 && words.length <= 150) {
+    if (words.length >= 100) {
         score += 30;
-        feedback.push('✓ Оптимальный объем текста (' + words.length + ' слов)');
-    } else if (words.length > 150) {
+        feedback.push('✓ Достаточный объем текста (' + words.length + ' слов)');
+    } else if (words.length >= 1) {
         score += 15;
-        feedback.push('⚠ Текст слишком длинный (' + words.length + ' слов). Оптимально: 100-150');
-    } else if (words.length >= 50) {
-        score += 15;
-        feedback.push('⚠ Мало слов (' + words.length + '). Оптимально: 100-150');
+        feedback.push('⚠ Мало слов (' + words.length + '). Рекомендуется: 100+');
     } else {
-        feedback.push('❌ Слишком мало слов (' + words.length + '). Минимум: 100');
+        feedback.push('❌ Нет текста');
     }
     
     return { score, feedback };
