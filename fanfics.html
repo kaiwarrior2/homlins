@@ -295,7 +295,37 @@
             <h3 class="progress-title">🎉 Задания разблокированы!</h3>
             <p style="font-size: 1.2rem; margin-bottom: 2rem;">Поздравляем! Вы прошли все уроки. Теперь доступны творческие задания.</p>
             <div id="tasksContainer">
-                <p style="color: #666;">Задания скоро появятся здесь...</p>
+                <div style="background: white; padding: 2rem; border-radius: 15px; margin: 1.5rem 0; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                    <h3 style="color: #BB794C; margin-bottom: 1rem;">Задание 1: Напиши описание хомлина</h3>
+                    <p style="margin-bottom: 1rem;">Выбери одного из семи хомлинов и напиши текст-описание (минимум 100 слов). Опиши его внешность, характер, привычки.</p>
+                    
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Выбери хомлина:</label>
+                    <select id="characterSelect" style="width: 100%; padding: 0.8rem; border: 2px solid #BB794C; border-radius: 10px; margin-bottom: 1rem; font-size: 1rem;">
+                        <option value="">-- Выбери персонажа --</option>
+                        <option value="Карл">Дедушка Карл</option>
+                        <option value="Лео">Папа Лео</option>
+                        <option value="Витя">Витя</option>
+                        <option value="Мама">Мама</option>
+                        <option value="Дочка">Дочка</option>
+                        <option value="Бабушка">Бабушка</option>
+                        <option value="Сын">Сын</option>
+                    </select>
+                    
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: bold;">Твой текст-описание:</label>
+                    <textarea id="descriptionText" placeholder="Напиши описание выбранного хомлина..." style="width: 100%; min-height: 200px; padding: 1rem; border: 2px solid #BB794C; border-radius: 10px; font-size: 1rem; font-family: Arial, sans-serif; resize: vertical; margin-bottom: 1rem;"></textarea>
+                    
+                    <div style="margin-bottom: 1rem;">
+                        <span style="color: #666;">Слов: <span id="wordCount">0</span> / 100</span>
+                    </div>
+                    
+                    <button onclick="checkDescription()" style="padding: 1rem 2rem; border: none; background: #BB794C; color: white; border-radius: 10px; cursor: pointer; font-size: 1rem; margin-right: 1rem;">Проверить с помощью ИИ</button>
+                    <button onclick="saveDescription()" style="padding: 1rem 2rem; border: none; background: #DEB308; color: #242423; border-radius: 10px; cursor: pointer; font-size: 1rem;">Сохранить</button>
+                    
+                    <div id="aiResult" style="margin-top: 1.5rem; padding: 1rem; border-radius: 10px; display: none;"></div>
+                    <div id="loadingAI" style="margin-top: 1rem; display: none; text-align: center;">
+                        <p style="color: #BB794C;">⏳ ИИ анализирует ваш текст...</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -362,6 +392,123 @@
         function toggleMobileMenu() {
             document.querySelector('.mobile-menu-btn').classList.toggle('active');
             document.querySelector('.top-nav').classList.toggle('active');
+        }
+        
+        // Подсчет слов
+        document.addEventListener('DOMContentLoaded', function() {
+            const textarea = document.getElementById('descriptionText');
+            if (textarea) {
+                textarea.addEventListener('input', function() {
+                    const text = this.value.trim();
+                    const words = text ? text.split(/\s+/).length : 0;
+                    document.getElementById('wordCount').textContent = words;
+                });
+            }
+        });
+        
+        // Проверка текста с помощью ИИ (симуляция)
+        async function checkDescription() {
+            const character = document.getElementById('characterSelect').value;
+            const text = document.getElementById('descriptionText').value.trim();
+            const wordCount = text ? text.split(/\s+/).length : 0;
+            
+            if (!character) {
+                alert('Выберите персонажа!');
+                return;
+            }
+            
+            if (wordCount < 100) {
+                alert('Текст должен содержать минимум 100 слов. Сейчас: ' + wordCount);
+                return;
+            }
+            
+            // Показываем загрузку
+            document.getElementById('loadingAI').style.display = 'block';
+            document.getElementById('aiResult').style.display = 'none';
+            
+            // Симуляция проверки ИИ
+            setTimeout(() => {
+                const analysis = analyzeText(text);
+                displayAIResult(analysis);
+                document.getElementById('loadingAI').style.display = 'none';
+            }, 2000);
+        }
+        
+        function analyzeText(text) {
+            const words = text.split(/\s+/);
+            const sentences = text.split(/[.!?]+/).filter(s => s.trim().length > 0);
+            
+            // Проверка на описательные слова
+            const descriptiveWords = ['красивый', 'маленький', 'большой', 'добрый', 'мудрый', 'веселый', 'грустный', 'яркий', 'тихий', 'громкий', 'старый', 'молодой', 'высокий', 'низкий'];
+            const hasDescriptive = descriptiveWords.some(word => text.toLowerCase().includes(word));
+            
+            // Проверка структуры
+            const hasGoodStructure = sentences.length >= 5;
+            
+            // Оценка
+            let score = 0;
+            let feedback = [];
+            
+            if (words.length >= 100) {
+                score += 30;
+                feedback.push('✓ Объем текста достаточный (' + words.length + ' слов)');
+            }
+            
+            if (hasDescriptive) {
+                score += 35;
+                feedback.push('✓ Использованы описательные прилагательные');
+            } else {
+                feedback.push('⚠ Добавьте больше описательных прилагательных');
+            }
+            
+            if (hasGoodStructure) {
+                score += 35;
+                feedback.push('✓ Хорошая структура текста (' + sentences.length + ' предложений)');
+            } else {
+                feedback.push('⚠ Разбейте текст на больше предложений');
+            }
+            
+            return { score, feedback };
+        }
+        
+        function displayAIResult(analysis) {
+            const resultDiv = document.getElementById('aiResult');
+            let color = '#dc3545';
+            let emoji = '❌';
+            
+            if (analysis.score >= 80) {
+                color = '#28a745';
+                emoji = '✅';
+            } else if (analysis.score >= 60) {
+                color = '#ffc107';
+                emoji = '⚠️';
+            }
+            
+            resultDiv.innerHTML = `
+                <h4 style="color: ${color}; margin-bottom: 1rem;">${emoji} Оценка ИИ: ${analysis.score}/100</h4>
+                <ul style="text-align: left; line-height: 2;">
+                    ${analysis.feedback.map(f => '<li>' + f + '</li>').join('')}
+                </ul>
+            `;
+            resultDiv.style.display = 'block';
+            resultDiv.style.background = color === '#28a745' ? '#d4edda' : (color === '#ffc107' ? '#fff3cd' : '#f8d7da');
+            resultDiv.style.border = '2px solid ' + color;
+        }
+        
+        function saveDescription() {
+            const character = document.getElementById('characterSelect').value;
+            const text = document.getElementById('descriptionText').value.trim();
+            
+            if (!character || !text) {
+                alert('Заполните все поля!');
+                return;
+            }
+            
+            localStorage.setItem('task1_character', character);
+            localStorage.setItem('task1_text', text);
+            localStorage.setItem('task1_completed', 'true');
+            
+            alert('✅ Работа сохранена!');
         }
     </script>
 
